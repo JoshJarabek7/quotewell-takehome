@@ -1,0 +1,1 @@
+{"insuredName":"Pelican Point Seafood House Inc","dba":null,"mailingAddress":{"street":"2217 Shoreline Blvd","city":"Mobile","state":"AL","zip":"36605"},"lineOfBusiness":"workers_compensation","effectiveDate":"2026-07-01","annualRevenue":850000,"contactEmail":"curtis@pelicanpointseafood.com"}

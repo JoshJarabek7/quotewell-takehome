@@ -1,0 +1,148 @@
+{
+  "generatedAt": "2026-07-08T01:27:58.707Z",
+  "outcomes": [
+    {
+      "emailId": "email_1",
+      "status": "confirmed",
+      "recordId": "AMS-DDFFEFC07F",
+      "payload": {
+        "insuredName": "Blue Oak Industries LLC",
+        "dba": "Blue Oak Manufacturing",
+        "mailingAddress": {
+          "street": "4180 Commerce Park Dr, Suite B",
+          "city": "Waco",
+          "state": "TX",
+          "zip": "76712"
+        },
+        "lineOfBusiness": "general_liability",
+        "effectiveDate": "2026-07-01",
+        "annualRevenue": 4200000,
+        "contactEmail": "maria@blueoakmfg.com"
+      },
+      "flags": [
+        {
+          "code": "state_normalized",
+          "detail": "\"Tex.\" → \"TX\""
+        },
+        {
+          "code": "lob_synonym_mapped",
+          "detail": "\"general liability\" → \"general_liability\""
+        },
+        {
+          "code": "date_assumed_month_first",
+          "detail": "\"07/01/2026\" is ambiguous; assumed US month/day/year"
+        },
+        {
+          "code": "date_normalized",
+          "detail": "\"07/01/2026\" → \"2026-07-01\""
+        },
+        {
+          "code": "revenue_parsed_from_string",
+          "detail": "\"$4.2M\" → 4200000"
+        },
+        {
+          "code": "revenue_multiple_candidates_kept_newest",
+          "detail": "source mentions several amounts (4200000, 3800000); extracted value matches the newest (topmost in the thread) — kept"
+        }
+      ]
+    },
+    {
+      "emailId": "email_2",
+      "status": "confirmed",
+      "recordId": "AMS-8F408E55F3",
+      "payload": {
+        "insuredName": "Pelican Point Seafood House Inc",
+        "dba": null,
+        "mailingAddress": {
+          "street": "2217 Shoreline Blvd",
+          "city": "Mobile",
+          "state": "AL",
+          "zip": "36605"
+        },
+        "lineOfBusiness": "workers_compensation",
+        "effectiveDate": "2026-07-01",
+        "annualRevenue": null,
+        "contactEmail": "curtis@pelicanpointseafood.com"
+      },
+      "flags": [
+        {
+          "code": "revenue_ungrounded_nulled",
+          "detail": "extracted annualRevenue 850000 is not supported by the source (no dollar amounts in source) — set to null per \"do not guess\""
+        },
+        {
+          "code": "effective_date_inferred_from_relative_phrase",
+          "detail": "no literal date in source; \"first of next month\" anchored to the email Date header (3 June 2026) resolves to 2026-07-01, matching the extracted value — accepted with this flag"
+        },
+        {
+          "code": "malformed_2xx_body",
+          "detail": "attempt 2: 200 with unusable body (\"{\\\"status\\\":\\\"accepted\\\",\\\"_node\\\":\\\"ams-prod-07\\\"}\") — resubmitted with the same idempotency key"
+        },
+        {
+          "code": "malformed_2xx_body",
+          "detail": "attempt 3: 200 with unusable body (\"{\\\"status\\\":\\\"accepted\\\",\\\"_node\\\":\\\"ams-prod-07\\\"}\") — resubmitted with the same idempotency key"
+        }
+      ]
+    },
+    {
+      "emailId": "email_3",
+      "status": "confirmed",
+      "recordId": "AMS-AD5BE8C44E",
+      "payload": {
+        "insuredName": "High Desert Holdings LLC",
+        "dba": "Sundance Storage",
+        "mailingAddress": {
+          "street": "PO Box 1142",
+          "city": "Bend",
+          "state": "OR",
+          "zip": "97709"
+        },
+        "lineOfBusiness": "commercial_property",
+        "effectiveDate": "2026-08-15",
+        "annualRevenue": 950000,
+        "contactEmail": "gary.hudd@sundancestorage.com"
+      },
+      "flags": [
+        {
+          "code": "two_digit_year_expanded",
+          "detail": "\"8/15/26\": interpreted year as 2026"
+        },
+        {
+          "code": "date_normalized",
+          "detail": "\"8/15/26\" → \"2026-08-15\""
+        },
+        {
+          "code": "mailing_address_corrected_to_po_box",
+          "detail": "source directs mail to a PO Box; replaced extracted \"880 Frontage Rd, Bend, OR 97701\" with \"PO Box 1142, Bend, OR 97709\" parsed from the source"
+        },
+        {
+          "code": "multiple_zips_in_source",
+          "detail": "source contains 2 zips (97701, 97709); submitted 97709"
+        }
+      ]
+    },
+    {
+      "emailId": "email_4",
+      "status": "failed",
+      "stage": "ground",
+      "reason": "extracted values are not supported by the source email",
+      "details": {
+        "errors": [
+          "effectiveDate 2026-07-01: does not appear in the source email in any recognized form and nothing anchors it — the extractor appears to have invented it; a confirmed date is needed before this can be submitted"
+        ]
+      },
+      "flags": [
+        {
+          "code": "revenue_parsed_from_string",
+          "detail": "\"$1.2M\" → 1200000"
+        }
+      ]
+    }
+  ],
+  "reconciliation": {
+    "storedCount": 3,
+    "confirmedCount": 3,
+    "orphans": [],
+    "missing": [],
+    "duplicateGroups": []
+  }
+}

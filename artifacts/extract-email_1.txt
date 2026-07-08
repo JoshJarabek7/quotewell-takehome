@@ -1,0 +1,20 @@
+Here is the extracted information from the email:
+
+```json
+{
+  "insuredName": "Blue Oak Industries LLC",
+  "dba": "Blue Oak Manufacturing",
+  "mailingAddress": {
+    "street": "4180 Commerce Park Dr, Suite B",
+    "city": "Waco",
+    "state": "Tex.",
+    "zip": "76712"
+  },
+  "lineOfBusiness": "general liability",
+  "effectiveDate": "07/01/2026",
+  "annualRevenue": "$4.2M",
+  "contactEmail": "maria@blueoakmfg.com"
+}
+```
+
+Note that the revenue figure was corrected in the most recent message of the thread.

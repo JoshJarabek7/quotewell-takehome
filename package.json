@@ -1,0 +1,19 @@
+{
+  "name": "quotewell-takehome",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "tsx src/pipeline.ts",
+    "test": "tsx --test src/normalize.test.ts src/parse.test.ts src/ground.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^6.0.3"
+  }
+}

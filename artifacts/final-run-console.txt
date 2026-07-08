@@ -1,0 +1,79 @@
+
+> quotewell-takehome@1.0.0 start
+> tsx src/pipeline.ts
+
+Found 4 emails in inbox/
+
+=== email_1 ===
+  prepared: Blue Oak Industries LLC / general_liability / eff 2026-07-01 / revenue 4200000
+  [flag] state_normalized: "Tex." → "TX"
+  [flag] lob_synonym_mapped: "general liability" → "general_liability"
+  [flag] date_assumed_month_first: "07/01/2026" is ambiguous; assumed US month/day/year
+  [flag] date_normalized: "07/01/2026" → "2026-07-01"
+  [flag] revenue_parsed_from_string: "$4.2M" → 4200000
+  [flag] revenue_multiple_candidates_kept_newest: source mentions several amounts (4200000, 3800000); extracted value matches the newest (topmost in the thread) — kept
+
+=== email_2 ===
+  prepared: Pelican Point Seafood House Inc / workers_compensation / eff 2026-07-01 / revenue null
+  [flag] revenue_ungrounded_nulled: extracted annualRevenue 850000 is not supported by the source (no dollar amounts in source) — set to null per "do not guess"
+  [flag] effective_date_inferred_from_relative_phrase: no literal date in source; "first of next month" anchored to the email Date header (3 June 2026) resolves to 2026-07-01, matching the extracted value — accepted with this flag
+
+=== email_3 ===
+  prepared: High Desert Holdings LLC / commercial_property / eff 2026-08-15 / revenue 950000
+  [flag] two_digit_year_expanded: "8/15/26": interpreted year as 2026
+  [flag] date_normalized: "8/15/26" → "2026-08-15"
+  [flag] mailing_address_corrected_to_po_box: source directs mail to a PO Box; replaced extracted "880 Frontage Rd, Bend, OR 97701" with "PO Box 1142, Bend, OR 97709" parsed from the source
+  [flag] multiple_zips_in_source: source contains 2 zips (97701, 97709); submitted 97709
+
+=== email_4 ===
+  NOT SUBMITTING — failed at ground: extracted values are not supported by the source email
+  {"errors":["effectiveDate 2026-07-01: does not appear in the source email in any recognized form and nothing anchors it — the extractor appears to have invented it; a confirmed date is needed before this can be submitted"]}
+  [flag] revenue_parsed_from_string: "$1.2M" → 1200000
+
+>>> submitting email_1 (idempotency key d7c927318554…)
+  [email_1] attempt 1/8: 429 rate-limited — honoring Retry-After: waiting 3s
+  [email_1] attempt 2/8: no response within 10s (hung request aborted) — backing off 0.4s
+  [email_1] attempt 3/8: 503 server error — backing off 1.3s
+  [email_1] attempt 4/8: 201 accepted, recordId AMS-DDFFEFC07F — verifying via GET
+  [email_1] attempt 4/8: GET confirms AMS-DDFFEFC07F matches the submitted payload — CONFIRMED
+
+>>> submitting email_2 (idempotency key de1bcfe17107…)
+  [email_2] attempt 1/8: 503 server error — backing off 0.4s
+  [email_2] attempt 2/8: 200 but body unusable — resubmitting with same key in 0.1s
+  [email_2] attempt 3/8: 200 but body unusable — resubmitting with same key in 2.0s
+  [email_2] attempt 4/8: 201 accepted, recordId AMS-8F408E55F3 — verifying via GET
+  [email_2] attempt 4/8: GET confirms AMS-8F408E55F3 matches the submitted payload — CONFIRMED
+
+>>> submitting email_3 (idempotency key 937390cad493…)
+  [email_3] attempt 1/8: 503 server error — backing off 0.4s
+  [email_3] attempt 2/8: 201 accepted, recordId AMS-AD5BE8C44E — verifying via GET
+  [email_3] attempt 2/8: GET confirms AMS-AD5BE8C44E matches the submitted payload — CONFIRMED
+
+========================================================================
+RUN SUMMARY
+========================================================================
+email_1  CONFIRMED  AMS-DDFFEFC07F  Blue Oak Industries LLC (general_liability, eff 2026-07-01)
+           [flag] state_normalized: "Tex." → "TX"
+           [flag] lob_synonym_mapped: "general liability" → "general_liability"
+           [flag] date_assumed_month_first: "07/01/2026" is ambiguous; assumed US month/day/year
+           [flag] date_normalized: "07/01/2026" → "2026-07-01"
+           [flag] revenue_parsed_from_string: "$4.2M" → 4200000
+           [flag] revenue_multiple_candidates_kept_newest: source mentions several amounts (4200000, 3800000); extracted value matches the newest (topmost in the thread) — kept
+email_2  CONFIRMED  AMS-8F408E55F3  Pelican Point Seafood House Inc (workers_compensation, eff 2026-07-01)
+           [flag] revenue_ungrounded_nulled: extracted annualRevenue 850000 is not supported by the source (no dollar amounts in source) — set to null per "do not guess"
+           [flag] effective_date_inferred_from_relative_phrase: no literal date in source; "first of next month" anchored to the email Date header (3 June 2026) resolves to 2026-07-01, matching the extracted value — accepted with this flag
+           [flag] malformed_2xx_body: attempt 2: 200 with unusable body ("{\"status\":\"accepted\",\"_node\":\"ams-prod-07\"}") — resubmitted with the same idempotency key
+           [flag] malformed_2xx_body: attempt 3: 200 with unusable body ("{\"status\":\"accepted\",\"_node\":\"ams-prod-07\"}") — resubmitted with the same idempotency key
+email_3  CONFIRMED  AMS-AD5BE8C44E  High Desert Holdings LLC (commercial_property, eff 2026-08-15)
+           [flag] two_digit_year_expanded: "8/15/26": interpreted year as 2026
+           [flag] date_normalized: "8/15/26" → "2026-08-15"
+           [flag] mailing_address_corrected_to_po_box: source directs mail to a PO Box; replaced extracted "880 Frontage Rd, Bend, OR 97701" with "PO Box 1142, Bend, OR 97709" parsed from the source
+           [flag] multiple_zips_in_source: source contains 2 zips (97701, 97709); submitted 97709
+email_4  FAILED     at ground: extracted values are not supported by the source email
+           details: {"errors":["effectiveDate 2026-07-01: does not appear in the source email in any recognized form and nothing anchors it — the extractor appears to have invented it; a confirmed date is needed before this can be submitted"]}
+           [flag] revenue_parsed_from_string: "$1.2M" → 1200000
+------------------------------------------------------------------------
+AMS reconciliation: 3 stored / 3 confirmed by this run
+  OK: AMS contents exactly match this run's confirmed set — no duplicates, no orphans, nothing missing
+
+Full machine-readable report: artifacts/run-report.json

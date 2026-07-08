@@ -1,0 +1,1 @@
+{"insuredName":"Tula Bakery LLC","dba":"Tula's","mailingAddress":{"street":"614 Larkin St","city":"San Francisco","state":"CA","zip":"94109"},"lineOfBusiness":"bop","effectiveDate":"2026-07-01","annualRevenue":"$1.2M","contactEmail":"sofia@tulabakery.com"}

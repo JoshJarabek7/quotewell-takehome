@@ -1,0 +1,1 @@
+{"insuredName":"High Desert Holdings LLC","dba":"Sundance Storage","mailingAddress":{"street":"880 Frontage Rd","city":"Bend","state":"OR","zip":"97701"},"lineOfBusiness":"commercial_property","effectiveDate":"8/15/26","annualRevenue":950000,"contactEmail":"gary.hudd@sundancestorage.com"}
